@@ -1,33 +1,59 @@
-import React, { useEffect, useState } from "react";
-import { db } from "../firebase/firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from 'react';
+import { db } from '../firebase/firebaseConfig'; // Make sure this path is correct
+import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 
 export default function RecentDetections() {
   const [detections, setDetections] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
-      const snapshot = await getDocs(collection(db, "detections"));
-      const entries = [];
-      snapshot.forEach(doc => {
-        entries.push(doc.data());
-      });
-      setDetections(entries.sort((a, b) => b.timestamp - a.timestamp));
-    }
+    const q = query(
+      collection(db, 'PeopleDetections'), // change to your actual collection name
+      orderBy('timestamp', 'desc'),
+      limit(5)
+    );
 
-    fetchData();
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => {
+        const d = doc.data();
+        return {
+          id: doc.id,
+          location: d.location || 'Unknown',
+          count: d.count || 0,
+          time: d.timestamp?.toDate().toLocaleString() || 'N/A'
+        };
+      });
+      setDetections(data);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   return (
-    <div style={{ padding: 20 }}>
-      <h3>Recent Detections</h3>
-      <ul>
-        {detections.slice(0, 5).map((d, idx) => (
-          <li key={idx}>
-            {new Date(d.timestamp).toLocaleString()} - {d.count} people in {d.location}
-          </li>
-        ))}
-      </ul>
+    <div style={{ marginTop: '40px', padding: '0 20px' }}>
+      <h3 style={{ fontWeight: 'bold', marginBottom: '10px' }}>Recent Detections</h3>
+      <table style={{
+        width: '100%',
+        borderCollapse: 'collapse',
+        fontFamily: 'Arial',
+        fontSize: '16px'
+      }}>
+        <thead>
+          <tr>
+            <th style={{ borderBottom: '2px solid #ccc', textAlign: 'left', padding: '10px' }}>Location</th>
+            <th style={{ borderBottom: '2px solid #ccc', textAlign: 'left', padding: '10px' }}>Count</th>
+            <th style={{ borderBottom: '2px solid #ccc', textAlign: 'left', padding: '10px' }}>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {detections.map((item) => (
+            <tr key={item.id}>
+              <td style={{ padding: '8px 10px' }}>{item.location}</td>
+              <td style={{ padding: '8px 10px' }}>{item.count}</td>
+              <td style={{ padding: '8px 10px' }}>{item.time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

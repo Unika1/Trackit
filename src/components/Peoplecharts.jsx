@@ -10,27 +10,46 @@ ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, Tooltip, Leg
 export default function PeopleChart() {
   const [chartData, setChartData] = useState(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      const snapshot = await getDocs(collection(db, "detections"));
-      const data = [];
-      snapshot.forEach((doc) => {
-        const d = doc.data();
-        data.push({ x: d.timestamp, y: d.count });
-      });
+useEffect(() => {
+  async function fetchData() {
+    const snapshot = await getDocs(collection(db, "PeopleDetections")); // 🔁 CHECK collection name here
+    const data = [];
 
-      setChartData({
-        datasets: [{
+    snapshot.forEach((doc) => {
+      const d = doc.data();
+      console.log("DOC DATA:", d);
+
+      let time = null;
+      try {
+        time = d.timestamp.toDate();
+      } catch (err) {
+        console.warn("⚠️ Invalid timestamp", d.timestamp);
+      }
+
+      if (time && typeof d.count === "number") {
+        data.push({ x: time, y: d.count });
+      }
+    });
+
+    if (data.length === 0) {
+      console.warn("⚠️ No valid data found to display in chart.");
+    }
+
+    setChartData({
+      datasets: [
+        {
           label: "People Count Over Time",
           data: data.sort((a, b) => a.x - b.x),
           borderColor: "blue",
-          fill: false
-        }]
-      });
-    }
+          fill: false,
+        },
+      ],
+    });
+  }
 
-    fetchData();
-  }, []);
+  fetchData();
+}, []);
+
 
   if (!chartData) return <p>Loading graph...</p>;
 

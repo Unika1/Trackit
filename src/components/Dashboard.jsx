@@ -1,20 +1,14 @@
 import React from "react";
-import "../../src/index.css"; // Ensure you have the correct path to your CSS
-import PeopleChart from "./Peoplecharts";
+import PeopleChart from "../components/Peoplecharts";
+import RecentDetections from "../components/RecentDetection";
 
 export default function Dashboard() {
   return (
-    <div className="dashboard-container">
-      <h1 className="dashboard-title">👀 Human Detection Dashboard</h1>
-
-      <div className="card">
-        <h2>📊 People Tracking Over Time</h2>
-        <div className="chart-container">
-          <PeopleChart />
-        </div>
-      </div>
-
-      {/* Add more cards for heatmaps, stats, etc */}
+    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
+      <h1>Admin Dashboard</h1>
+      <PeopleChart />
+      <RecentDetections />
+      {/* Add <HeatmapDashboard /> here later if needed */}
     </div>
   );
 }
