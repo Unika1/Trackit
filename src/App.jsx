@@ -1,14 +1,10 @@
-import PeopleChart from "../src/components/Peoplecharts.jsx";
-import HeatmapDashboard from "../src/components/HeatmapDashboard.jsx";
-import RecentDetections from "../src/components/RecentDetection.jsx";
+import React from "react";
+import Dashboard from "./components/Dashboard";
 
-export default function App() {
-  return (
-    <div>
-      <h1 style={{ textAlign: "center" }}>Admin Dashboard</h1>
-      <PeopleChart />
-      <HeatmapDashboard />
-      <RecentDetections />
-    </div>
-  );
+
+function App() {
+  return <Dashboard />;
+
 }
+
+export default App;
