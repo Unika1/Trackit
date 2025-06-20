@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/firebaseConfig";
-import { collection, getDocs, Timestamp } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function StatsCard() {
   const [stats, setStats] = useState({
@@ -46,18 +46,20 @@ export default function StatsCard() {
   }, []);
 
   return (
-    <div className="grid grid-cols-3 gap-4 mt-4">
-      <div className="bg-white p-4 rounded shadow">
-        <p className="text-gray-500">Total Today</p>
-        <h2 className="text-2xl font-bold">{stats.totalToday}</h2>
+    <div className="metrics">
+      <div className="card">
+        <p style={{ color: "#666", fontSize: "14px" }}>👥 Total Today</p>
+        <h2 style={{ fontSize: "28px", fontWeight: "bold", marginTop: "8px" }}>{stats.totalToday}</h2>
       </div>
-      <div className="bg-white p-4 rounded shadow">
-        <p className="text-gray-500">Active Users</p>
-        <h2 className="text-2xl font-bold">{stats.activeUsers}</h2>
+
+      <div className="card">
+        <p style={{ color: "#666", fontSize: "14px" }}>🟢 Active Users (Last Hour)</p>
+        <h2 style={{ fontSize: "28px", fontWeight: "bold", marginTop: "8px" }}>{stats.activeUsers}</h2>
       </div>
-      <div className="bg-white p-4 rounded shadow">
-        <p className="text-gray-500">Busiest Hour</p>
-        <h2 className="text-2xl font-bold">{stats.busiestHour}</h2>
+
+      <div className="card">
+        <p style={{ color: "#666", fontSize: "14px" }}>⏰ Busiest Hour</p>
+        <h2 style={{ fontSize: "28px", fontWeight: "bold", marginTop: "8px" }}>{stats.busiestHour}</h2>
       </div>
     </div>
   );
