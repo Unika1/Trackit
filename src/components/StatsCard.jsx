@@ -22,13 +22,14 @@ export default function StatsCard() {
         const { count, timestamp } = doc.data();
         const ts = timestamp?.toDate();
         if (!ts) return;
+        const validCount = Number(count) || 0;
 
         if (ts.toDateString() === today) {
-          total += count;
+          total += validCount;
           const hour = ts.getHours();
           hourlyMap[hour] = (hourlyMap[hour] || 0) + count;
           if ((now - ts) / 1000 < 3600) {
-            active += count;
+            active += validCount;
           }
         }
       });

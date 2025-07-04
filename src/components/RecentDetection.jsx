@@ -78,7 +78,7 @@ export default function RecentDetections() {
         return {
           id: doc.id,
           location: d.location || 'Unknown',
-          count: d.count || 0,
+          count: typeof d.count === 'number' ? d.count : d.count?.in_count ?? 0,
           time: d.timestamp?.toDate().toLocaleString() || 'N/A'
         };
       });
