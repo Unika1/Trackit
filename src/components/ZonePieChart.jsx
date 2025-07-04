@@ -42,11 +42,11 @@ export default function ZonePieChart() {
     <Pie
       data={data}
       options={{
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false
       }}
-      width={200}
-      height={200}
+      width={180}
+      height={180}
     />
   </div>
 );

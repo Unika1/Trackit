@@ -88,7 +88,7 @@
 
 /* === CHARTS === */
 .chart-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -118,6 +118,7 @@
 
 .camera-placeholder {
   width: 100%;
+  max-height: 300px;
   aspect-ratio: 16 / 9;
   background-color: #e0e0e0;
   display: flex;
@@ -125,7 +126,9 @@
   justify-content: center;
   font-size: 18px;
   color: #666;
+  border-radius: 8px;
   margin-top: 10px;
+  overflow: hidden;
 }
 
 /* === RECENT TABLE === */

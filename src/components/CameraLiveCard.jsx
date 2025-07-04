@@ -1,12 +1,24 @@
 export default function CameraLiveCard() {
   return (
-    <div className="bg-white p-4 rounded shadow text-center">
-      <p className="mb-2 text-gray-500"style={{ textAlign: "center" }}
-      >Live Camera</p>
-      <div className="aspect-video bg-gray-200 flex items-center justify-center">
-        <p className="text-gray-700"style={{ textAlign: "center" }}
-        >[Live Feed Placeholder]</p>
-      </div>
-    </div>
-  );
+    <div style={{
+  background: "#fff",
+  padding: "20px",
+  borderRadius: "16px",
+  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.06)",
+  textAlign: "center",
+}}>
+  <p style={{ marginBottom: "10px", color: "#666" }}>Live Camera</p>
+  <div style={{
+    aspectRatio: "16 / 9",
+    backgroundColor: "#e0e0e0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "18px",
+    color: "#666",
+  }}>
+    [Live Feed Placeholder]
+  </div>
+</div>
+);
 }
