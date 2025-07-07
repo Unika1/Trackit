@@ -17,7 +17,15 @@ export default function CameraLiveCard() {
     fontSize: "18px",
     color: "#666",
   }}>
-    [Live Feed Placeholder]
+     <img
+          src="http://192.168.137.60:5000/"
+          alt="Live Stream"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
   </div>
 </div>
 );
