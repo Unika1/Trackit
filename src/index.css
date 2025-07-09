@@ -1,154 +1,191 @@
-/* body {
-  font-family: 'Inter', sans-serif;
-  background: #f7f9fc;
-  color: #333;
-}
-
-.dashboard-header {
-  font-size: 2rem;
-  font-weight: 700;
-  padding-bottom: 20px;
-}
-
-.card {
-  background: white;
+.dashboard-wrapper {
+  background-color: #f7f9fc;
+  height: 100vh;
+  font-family: "Inter", sans-serif;
   padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  text-align: left;
-  min-width: 200px;
-  flex: 1;
-}
-
-.chart-container {
-  max-width: 600px;
+  max-width: 1600px;
   margin: 0 auto;
-}
-.metrics {
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-.recent-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-}
-
-.recent-table th,
-.recent-table td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.recent-table th {
-  background-color: #f0f2f5;
-  font-weight: 600;
-} */
-/* === GLOBAL === */
-/* body {
-  font-family: 'Inter', sans-serif;
-  background: #f7f9fc;
-  color: #333;
-  margin: 0;
-  padding: 0;
-} */
-
-.dashboard-header {
-  font-size: 2rem;
-  font-weight: 700;
-  padding-bottom: 20px;
-  text-align: center;
-}
-
-/* === CONTAINERS === */
-.metrics,
-.dashboard-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-/* === CARDS === */
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  text-align: left;
-  flex: 1;
-  min-width: 250px;
-}
-
-/* === CHARTS === */
-.chart-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* === PIE CHART SPECIFIC === */
-.pie-wrapper {
-  width: 220px;
-  height: 220px;
-  margin: auto;
-}
-
-.pie-chart-title {
-  text-align: center;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-/* === CAMERA === */
-.camera-card {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  text-align: center;
-  flex: 1;
-  min-width: 250px;
-}
-
-.camera-placeholder {
-  width: 100%;
-  max-height: 300px;
-  aspect-ratio: 16 / 9;
-  background-color: #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #666;
-  border-radius: 8px;
-  margin-top: 10px;
+  flex-direction: column;
   overflow: hidden;
 }
 
-/* === RECENT TABLE === */
+/* Header */
+.dashboard-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.dashboard-time {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  color: #444;
+  align-items: center;
+}
+
+.live-dot {
+  color: green;
+  font-weight: 500;
+}
+
+/* Top grid layout */
+.dashboard-grid-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.camera-container {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Metrics cards container */
+.metrics-container {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.metric-card {
+  flex: 1;
+  min-width: 150px;
+  max-width: 200px;
+  /* height: 90%; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  justify-content: flex-start;
+  /* padding-top: 12px; */
+}
+
+/* Bottom grid layout */
+.dashboard-grid-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  flex-grow: 1;
+  overflow: hidden;
+  padding-top: 10px;
+}
+
+/* Card styles */
+.card {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  /* overflow: hidden; */
+  padding-top: 10px;
+  box-sizing: border-box;
+}
+
+/* Bottom section cards (charts, pie, table) */
+/* .chart-box,
+.pie-box,
+.detection-box {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} */
+.chart-box p,
+.pie-box p,
+.detection-box h3 {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+/* Line chart specific */
+.chart-box {
+  min-height: 340px;
+}
+
+/* Pie chart specific */
+.pie-box {
+  min-height: 300px;
+}
+
+.pie-box canvas {
+  height: 240px !important;
+}
+
+/* Recent Detections table scroll */
+.detection-box {
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  height: 100%;
+  min-height: 240px;
+}
+.table-scroll-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 250px;
+}
+/* Recent table styling */
 .recent-table {
+  /* flex: 1; */
   width: 100%;
   border-collapse: collapse;
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  margin-top: 16px;
+  font-size: 14px;
 }
 
 .recent-table th,
 .recent-table td {
-  padding: 10px;
-  text-align: left;
+  padding: 10px 10px;
   border-bottom: 1px solid #ddd;
+  text-align: left;
+  /* min-height: 250px; */
+
 }
 
 .recent-table th {
-  background-color: #f0f2f5;
-  font-weight: 600;
+  background-color: #f0f0f0;
+  font-weight: normal;
 }
-    
+
+/* Responsive adjustments */
+@media (max-width: 1100px) {
+  .dashboard-grid-bottom {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid-top,
+  .dashboard-grid-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .camera-container,
+  .metrics-container,
+  .chart-box,
+  .pie-box,
+  .detection-box {
+    height: auto;
+  }
+}
+.recent-title {
+  font-weight: 500; 
+  margin-bottom: 10px;
+  color: #333; 
+  font-size: 16px; 
+}

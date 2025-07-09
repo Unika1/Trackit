@@ -1,70 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import { db } from "../firebase/firebaseConfig";
-// import { collection, getDocs } from "firebase/firestore";
-// import { Line } from "react-chartjs-2";
-// import { Chart as ChartJS, TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
-// import 'chartjs-adapter-date-fns';
-
-// ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
-
-// export default function PeopleChart() {
-//   const [chartData, setChartData] = useState(null);
-
-// useEffect(() => {
-//   async function fetchData() {
-//     const snapshot = await getDocs(collection(db, "PeopleDetections")); // 🔁 CHECK collection name here
-//     const data = [];
-
-//     snapshot.forEach((doc) => {
-//       const d = doc.data();
-//       console.log("DOC DATA:", d);
-
-//       let time = null;
-//       try {
-//         time = d.timestamp.toDate();
-//       } catch (err) {
-//         console.warn("⚠️ Invalid timestamp", d.timestamp);
-//       }
-
-//       if (time && typeof d.count === "number") {
-//         data.push({ x: time, y: d.count });
-//       }
-//     });
-
-//     if (data.length === 0) {
-//       console.warn("⚠️ No valid data found to display in chart.");
-//     }
-
-//     setChartData({
-//       datasets: [
-//         {
-//           label: "People Count Over Time",
-//           data: data.sort((a, b) => a.x - b.x),
-//           borderColor: "blue",
-//           fill: false,
-//         },
-//       ],
-//     });
-//   }
-
-//   fetchData();
-// }, []);
-
-
-//   if (!chartData) return <p>Loading graph...</p>;
-
-//   return (
-//     <div style={{ maxWidth: 700, margin: "auto" }}>
-//       <Line data={chartData} options={{
-//         responsive: true,
-//         scales: {
-//           x: { type: "time", title: { display: true, text: "Time" } },
-//           y: { title: { display: true, text: "Count" } }
-//         }
-//       }} />
-//     </div>
-//   );
-// }
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
@@ -79,7 +12,6 @@ import {
   Legend
 } from "chart.js";
 import "chartjs-adapter-date-fns";
-import "../index.css"; // Ensure this path is correct
 
 ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
@@ -96,13 +28,15 @@ export default function PeopleChart() {
 
         let time = null;
         try {
-          time = d.timestamp.toDate();
-        } catch (err) {
+          time = d.timestamp?.toDate();
+        } catch {
           console.warn("⚠️ Invalid timestamp", d.timestamp);
         }
 
-        if (time && typeof d.count === "number") {
-          data.push({ x: time, y: d.count });
+        const count = Number(d.count) || 0;
+
+        if (time) {
+          data.push({ x: time, y: count });
         }
       });
 
@@ -116,6 +50,8 @@ export default function PeopleChart() {
             label: "People Count Over Time",
             data: data.sort((a, b) => a.x - b.x),
             borderColor: "blue",
+            backgroundColor: "lightblue",
+            tension: 0.3,
             fill: false,
           },
         ],
@@ -125,18 +61,29 @@ export default function PeopleChart() {
     fetchData();
   }, []);
 
-  if (!chartData) return <p>Loading graph...</p>;
+  if (!chartData) return <p className="chart-loading">Loading graph...</p>;
 
   return (
-    <div className="card chart-container">
+    <div className="card chart-box">
+      <p className="chart-title">People Count Over Time</p>
       <Line
         data={chartData}
         options={{
           responsive: true,
+          plugins: {
+            legend: { display: true, position: "top" },
+          },
           scales: {
-            x: { type: "time", title: { display: true, text: "Time" } },
-            y: { title: { display: true, text: "Count" } }
-          }
+            x: {
+              type: "time",
+              time: { unit: "hour" },
+              title: { display: true, text: "Time" },
+            },
+            y: {
+              title: { display: true, text: "Count" },
+              beginAtZero: true,
+            },
+          },
         }}
       />
     </div>
